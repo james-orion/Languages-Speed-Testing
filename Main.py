@@ -8,7 +8,7 @@ from Sorting import *
 
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
-# TODO: Change these to True when you are ready to run the Python and C++ simulations
+# Change these to True when you are ready to run the Python and C++ simulations
 runPython = True
 runCpp = True
 runJava = False
@@ -16,11 +16,15 @@ runJava = False
 # Create empty lists that will store the bubble sort runtimes
 pythonBubbleTimes = []
 pythonSelectionTimes = []
+pythonMergeTimes = []
 
 cppBubbleTimes = []
 cppSelectionTimes = []
+cppMergeTimes = []
 
-javaTimes = []
+javaBubbleTimes = []
+javaSelectionTimes = []
+javaMergeTimes = []
 
 # Python sorting
 if runPython:
@@ -55,7 +59,7 @@ if runPython:
     for size in range(1000, 10001, 1000):
         # If debug is true, print statement to show where you are in the program
         if debug:
-            print(f"Let's see how long it takes Python to bubble sort {size} random integers from a file!")
+            print(f"Let's see how long it takes Python to selection sort {size} random integers from a file!")
 
         # Start the clock
         tic = time.time()

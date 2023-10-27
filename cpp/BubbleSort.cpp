@@ -58,36 +58,6 @@ int main(int argc, char* argv[]) {
         cout << numbers[j] << ", ";
     }
 
-// Print the vector size (to make sure it matches the size printed above)
-    cout << "The vector has a size of " << selectionNumbers.size() << endl;
-
-    //Selection Sort the vector
-    int swapIndex, i, minIndex;
-    int temp;
-    for (swapIndex = 0; swapIndex < selectionNumbers.size()-1; ++swapIndex) {
-        // Loop through vector starting at swapIndex and keep track of min
-        minIndex = swapIndex;
-        for (i = swapIndex+1; i < vec.size(); ++i) {
-            if (selectionNumbers[i] < selectionNumbers[minIndex]) {
-                // We have a new minimum
-                minIndex = i;
-            }
-        }
-        // Swap min value into swapIndex spot in vector
-        temp = selectionNumbers[swapIndex];
-        selectionNumbers[swapIndex] = selectionNumbers[minIndex];
-        selectionNumbers[minIndex] = temp;
-    }
-
-    //TODO: print the first and last ten numbers from the vector to the console
-    for(int i = 0; i < 10; i++) {
-        cout << selectionNumbers[i] << ", ";
-    }
-    for(int j = selectionNumbers.size() - 10; j < selectionNumbers.size(); j++) {
-        cout << selectionNumbers[j] << ", ";
-    }
-
-
     //TODO: Merge sort the vector
 
     //TODO: print the first and last ten numbers from the vector to the console
