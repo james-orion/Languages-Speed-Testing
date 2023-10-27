@@ -75,7 +75,7 @@ def merge_sort(size):
     print(f"Vector size: {len(nums)}")
 
     # Calls the recursive merge sort function
-    merge_sort_rec(nums, 0, len(nums)-1)
+    sort_merge(nums, 0, len(nums)-1)
 
     # print the first and last ten numbers to demonstrate correct sorting
     print("To show that it worked, here are the first ten and last ten numbers:")
@@ -83,43 +83,52 @@ def merge_sort(size):
     print("...")
     print(nums[-10:])
 
+def merge(nums, start_value, center_value, end_value):
+    left_end = center_value - start_value + 1
+    right_end = end_value - center_value
 
-def merge_sort_rec(nums, start_value, end_value):
-    #If the array still needs to be further split
-    if (end_value > start_value):
-        #Creates new arrays representing the two halves
-        center_value = len(nums)//2 #// operator does integer division
-        left = nums[start_value:center_value]
-        right = nums[center_value:end_value]
+    #Create temp arrays for the left and right halves
+    left_temp = [0] * left_end
+    right_temp = [0] * right_end
 
-        #Recursively sorts the two halves
-        merge_sort_rec(left, start_value, center_value)
-        merge_sort_rec(right, center_value, end_value)
+    # Copy numbers into the temp arrays
+    for i in range(0, left_end):
+        left_temp[i] = nums[start_value + i]
+    for j in range(0, right_end):
+        right_temp[i] = nums[center_value + 1 + j]
 
-    # Merge
-    temp = []
-    left_index = start_value
-    right_index = center_value + 1
-    # While both left_index and right_index are in bounds
-    while(left_index <= center_value && right_index <= end_value):
-        if(nums[left_index] <= nums[right_index]):
-            temp.append(nums[left_index])
-            left_index = left_index + 1
+    # Merge the temp arrays back into nums
+    left_index = 0    # first index of left temp array
+    right_index = 0    # first index of right temp array
+    merged_index = 0    # first index of merged array
+
+    while left_index < left_end and right_index < right_end:
+        if left_temp[left_index] <= right_temp[right_index]:
+            nums[merged_index] = left_temp[left_index]
+            left_index += 1
         else:
-            temp.append(nums[right_index])
-            right_index = right_index + 1
-    
-    #One of the halves is empty and the other has at least one element
-    while (left_index <= center_value):
-        temp.append(nums[left_index])
-        left_index = left_index + 1
-    while (right_index <= end_value):
-        temp.append(nums[right_index])
-        right_index = right_index + 1
+            nums[merged_index] = right_temp[right_index]
+            right_index += 1
+        merged_index += 1
 
-    # Now all values have been copied into temp
-    # We need to copy everything back into nums
-    for i in range (len(temp)):
-        nums[i + start_value] = temp [i]
+    #Copy the remaining elements of left_temp
+    while left_index < left_end:
+        nums[merged_index] = left_temp[left_index]
+        left_index += 1
+        merged_index += 1
+
+    # Copy the remaining elements of right_temp
+    while right_index < right_end:
+        nums[merged_index] = right_temp[right_index]
+        right_index += 1
+        merged_index += 1
 
 
+def sort_merge(nums, start_value, end_value):
+    if start_value < end_value:
+        center_value = (start_value + (end_value - 1)) // 2
+
+        # Sort first and second halves
+        sort_merge(nums, start_value, center_value)
+        sort_merge(nums, center_value + 1, end_value)
+        merge(nums, start_value, center_value, end_value)

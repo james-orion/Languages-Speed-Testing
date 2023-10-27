@@ -8,12 +8,12 @@ using namespace std;
 /**
  * A method that handles the recursive calls to mergeSort
  */
-void mergeSortRec(vector<int> &vec, int startIndex, int endIndex);
+void mergeSortRec(vector<long> &vec, int startIndex, int endIndex);
 
 /**
  * A method that merge sorts a vector
  */
-void mergeSort(vector<int> vec);
+void mergeSort(vector<long> vec);
 
 
 int main(int argc, char* argv[]) {
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 }
 
 
-void mergeSortRec(vector<int> &vec, int startIndex, int endIndex) {
+void mergeSortRec(vector<long> &vec, int startIndex, int endIndex) {
     // Recursive base case
     if (startIndex >= endIndex) {
         return;
@@ -71,7 +71,7 @@ void mergeSortRec(vector<int> &vec, int startIndex, int endIndex) {
     mergeSortRec(vec, centerIndex + 1, endIndex);
 
     // Merge
-    vector<int> temp;
+    vector<long> temp;
     int leftIndex = startIndex;
     int rightIndex = centerIndex + 1;
     // While leftIndex and rightIndex are in bounds of their half
@@ -100,6 +100,6 @@ void mergeSortRec(vector<int> &vec, int startIndex, int endIndex) {
     }
 }
 
-void mergeSort(vector<int> vec) {
+void mergeSort(vector<long> vec) {
     mergeSortRec(vec, 0, vec.size() - 1);
 }

@@ -83,6 +83,34 @@ if runPython:
         print(pythonSelectionTimes)
 
 
+    # Merge Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+            print(f"Let's see how long it takes Python to merge sort {size} random integers from a file!")
+
+        # Start the clock
+        tic = time.time()
+
+        #Calls the bubble sort function from the other file
+        merge_sort(size)
+
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took Python to sort the integers
+        if debug:
+            print(f"Python Merge Sort finished in {(toc - tic):0.6f} seconds")
+        
+        # Add the runtime to the list
+        pythonMergeTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of Python runtimes
+    if debug:
+        print("Python merge times:")
+        print(pythonMergeTimes)
+
+
 # C++ sorting
 if runCpp:
     # Bubble Sort 1000, 2000, 3000, ..., 10000 integers
@@ -251,7 +279,7 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('BattleOfTheBubbleSorts.png')
+plt.savefig('graphs/BattleOfTheBubbleSorts.png')
 # Display the graph in a new window
 plt.show()
 
@@ -286,7 +314,7 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('BattleOfTheSelectionSorts.png')
+plt.savefig('graphs/BattleOfTheSelectionSorts.png')
 # Display the graph in a new window
 plt.show()
 
@@ -302,7 +330,7 @@ cppX = range(1150, 10501, 1000)
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonSelectionTimes) < 10 or len(cppSelectionTimes) < 10:
+if len(pythonMergeTimes) < 10 or len(cppMergeTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
@@ -321,6 +349,6 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('BattleOfTheMergeSorts.png')
+plt.savefig('graphsBattleOfTheMergeSorts.png')
 # Display the graph in a new window
 plt.show()
