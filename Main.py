@@ -279,7 +279,7 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('graphs/BattleOfTheBubbleSorts.png')
+plt.savefig('BattleOfTheBubbleSorts.png')
 # Display the graph in a new window
 plt.show()
 
@@ -314,7 +314,7 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('graphs/BattleOfTheSelectionSorts.png')
+plt.savefig('BattleOfTheSelectionSorts.png')
 # Display the graph in a new window
 plt.show()
 
@@ -349,6 +349,6 @@ plt.xticks(sizes)
 # Label the y axis
 plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
 # Save the graph to a file
-plt.savefig('graphsBattleOfTheMergeSorts.png')
+plt.savefig('BattleOfTheMergeSorts.png')
 # Display the graph in a new window
 plt.show()
