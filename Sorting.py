@@ -74,8 +74,33 @@ def radix_sort(size):
     print(f"Vector size: {len(nums)}")
 
     #Radix sort algorithm
+    # Finds the number of digits in the largest number
+    largest = nums[0]
+    for i in range(1, len(nums)):
+        if(nums[i] > largest):
+            largest = nums[i]
+    count = 0
+    if largest == 0:
+        count = 1
+    while largest != 0:
+        largest /= 10
+        count += 1
+    num_digits = count
+
     buckets = [][] * 10
-    for i in range
+    for i in range(0, num_digits):
+        # Copy everything from nums into buckets
+        for j in range(0, len(nums)):
+            digit = (nums[i] // (10 ** i)) % 10
+            buckets[digit].append(nums[i])
+        # Copy everything from buckets back into nums
+        index = 0
+        for bucket in range(0, len(buckets)):
+            for item in range(0,  len(buckets[bucket])):
+                nums[index] = buckets[bucket][item]
+                index += 1
+            buckets[bucket].clear()
+
 
     # print the first and last ten numbers to demonstrate correct sorting
     print("To show that it worked, here are the first ten and last ten numbers:")
