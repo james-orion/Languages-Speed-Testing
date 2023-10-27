@@ -58,9 +58,6 @@ int main(int argc, char* argv[]) {
         cout << numbers[j] << ", ";
     }
 
-    //TODO: Merge sort the vector
-
-    //TODO: print the first and last ten numbers from the vector to the console
 
     return 0;
 }
