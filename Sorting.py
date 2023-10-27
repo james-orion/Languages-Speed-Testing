@@ -1,5 +1,5 @@
 def bubble_sort(size):
-    print("Looking for size" + size +"\n")
+    print("Looking for size " + str(size) +"\n")
 
     nums = []
     # Read numbers from file
