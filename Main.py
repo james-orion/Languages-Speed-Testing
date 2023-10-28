@@ -9,9 +9,9 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = True
-runCpp = True
-runJava = False
+runPython = False
+runCpp = False
+runJava = True
 
 # Create empty lists that will store the bubble sort runtimes
 pythonBubbleTimes = []
@@ -246,6 +246,52 @@ if runCpp:
     if debug:
         print("C++ radix times:")
         print(cppRadixTimes)
+
+# Java sorting
+if runJava:
+    # Bubble Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+             print(f"Let's see how long it takes java to bubble sort {size} random integers from a file!")
+        # Start the clock
+        tic = time.time()
+        try:
+            # This is Python's way of calling the command line. We use it to compile the Java files.
+            subprocess.check_output("javac java/BubbleSort.java",stdin=None,stderr=subprocess.STDOUT,shell=True)
+            print ("Compiled!")
+        except subprocess.CalledProcessError as e:
+            # There were compiler errors in BubbleSort.java. Print out the error message and exit the program.
+            print("<p>",e.output,"</p>")
+            raise SystemExit
+
+        if platform.system() == 'Windows':
+            p = Popen('a.exe '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+            if debug:
+                print(p.stdout.read().decode('utf-8'))
+            os.remove("a.exe")
+        else: # Mac and Linux case
+            p = Popen(['./a.out '+str(size)], shell=True, stdout=PIPE, stdin=PIPE)
+            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+            if debug:
+                print(p.stdout.read().decode('utf-8'))
+            os.remove("a.out")
+        
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took C++ to sort the integers
+        if debug:
+            print(f"Java Bubble Sort finished in {(toc - tic):0.6f} seconds")
+
+        # Add the runtime to the list
+        javaBubbleTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of C++ runtimes
+    if debug:
+        print("Java bubble times:")
+        print(javaBubbleTimes)
 
 
 
