@@ -1,8 +1,8 @@
 import java.io.*;
 import java.util.Scanner;
 
-public class BubbleSort {
-	public static void main(String args[]) throws IOException {
+public class SelectionSort {
+	public static void main(String[] args) throws IOException {
 		int size;
 		// Get command line input
 		if(args.length > 0) {
@@ -28,23 +28,22 @@ public class BubbleSort {
 
 		System.out.println("Looking for size: " + size);
 
-		// Bubble sort algorithm
-		int numPasses = 0, i;
+		//Selection Sort algorithm
+		int swapIndex, i, minIndex;
 		long temp;
-		boolean haveSwapped = true;
-		while(haveSwapped) {
-			haveSwapped = false;
-			for(i = 0; i+1 < numbers.length - numPasses; i++) {
-				//Compare items at indices i and i+1 and swap if necessary
-				if (numbers[i] > numbers[i+1]) {
-					temp = numbers[i];
-					numbers[i] = numbers[i+1];
-					numbers[i+1] = temp;
-					//Update haveSwapped
-					haveSwapped = true;
+		for(swapIndex = 0; swapIndex < numbers.length - 1; swapIndex++) {
+			// Loop through the array starting at swapIndex and keep track of min
+			minIndex = swapIndex;
+			for(i = swapIndex+1; i < numbers.length; i++) {
+				if(numbers[i] < numbers[minIndex]) {
+					// We have a new minimum
+					minIndex = i;
 				}
 			}
-			numPasses++;
+			//Swap min value into swapIndex spot in vector
+			temp = numbers[swapIndex];
+			numbers[swapIndex] = numbers[minIndex];
+			numbers[minIndex] = temp;
 		}
 
 		//Print the first and last ten numbers from the vector to the console
@@ -55,6 +54,5 @@ public class BubbleSort {
 		for(int j = numbers.length - 10; j < numbers.length; j++) {
 			System.out.print(numbers[j] + ", ");
 		}
-
 	}
 }

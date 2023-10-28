@@ -103,8 +103,8 @@ def counting_sort(nums, digit):
 
     # Stores the count of each occurance in the count array
     for i in range(0, num):
-        index = (nums[i]/digit)
-        count[int(index%10)] += 1 #increases the count of the number at the digit place by one
+        index = (nums[i]//digit)
+        count[index%10] += 1 #increases the count of the number at the digit place by one
 
     # Update count so it contains the actual position of the digit in the array
     for i in range (1, 10):
@@ -113,9 +113,9 @@ def counting_sort(nums, digit):
     # Builds the output array
     i = num - 1
     while(i >= 0):
-        index = (nums[i]/digit)
-        output[count[int((index)%10)] - 1] = nums[i]
-        count[int((index)%10)] -= 1
+        index = (nums[i]//digit)
+        output[count[index%10] - 1] = nums[i]
+        count[(index%10)] -= 1
         i -= 1
 
     # Copies the output array into nums[] so that the array is now sorted

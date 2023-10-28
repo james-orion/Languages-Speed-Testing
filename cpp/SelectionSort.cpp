@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
     //Selection Sort the vector
     int swapIndex, i, minIndex;
-    int temp;
+    long temp;
     for (swapIndex = 0; swapIndex < numbers.size()-1; ++swapIndex) {
         // Loop through vector starting at swapIndex and keep track of min
         minIndex = swapIndex;
@@ -59,7 +59,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
-    //TODO: Merge sort the vector
-
-    //TODO: print the first and last ten numbers from the vector to the console
