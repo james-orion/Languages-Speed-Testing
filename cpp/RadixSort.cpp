@@ -9,12 +9,12 @@ using namespace std;
 /**
  * Helper method to return the max number in the vector
  */
-int getMax(vector<int> nums, int num);
+int getMax(vector<long> nums, int num);
 
 /**
  * Helper method to counting sort the vector based on the digit, like in the python implementation
  */
-void countingSort(vector<int> nums, int num, int digit);
+void countingSort(vector<long> nums, int num, int digit);
 
 int main(int argc, char* argv[]) {
     int size;
@@ -65,19 +65,19 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-int getMax(vector<int> nums, int num) {
+int getMax(vector<long> nums, int num) {
     int max = nums[0];
     for (int i = 1; i < num; i++) {
         if (nums[i] > max) {
-            max = num[i];
+            max = nums[i];
         }
     }
     return max;
 }
 
-void countingSort(vector<int> nums, int num, int digit) {
+void countingSort(vector<long> nums, int num, int digit) {
     vector<int> output(num);
-    vector<int> count(10) = {0};
+    vector<int> count(10);
     int i;
 
     // Store count of occurrences in count
