@@ -2,3 +2,6 @@ a.out
 a.exe
 Sorting.o
 __pycache__
+BubbleSort.class
+SelectionSort.class
+RadixSort.class

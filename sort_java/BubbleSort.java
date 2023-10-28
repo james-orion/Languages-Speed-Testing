@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.Scanner;
 
 public class BubbleSort {
-	public static void main(String args[]) {
+	public static void main(String args[]) throws IOException {
 		int size;
 		// Get command line input
 		if(args.length > 0) {
-			size = args[0];
+			size = Integer.parseInt(args[0]);
 		} else {
 			size = 10000;
 		}
@@ -18,11 +18,11 @@ public class BubbleSort {
 		// Read size numbers from numbers.txt
 		File nums = new File("numbers.txt");
 		Scanner scan = new Scanner(nums);
-		long num;
+		long n;
 		for(int i=0; i<size; i++) {
 			if(scan.hasNext()) {
-				num = scan.nextLine();
-				numbers[i] = num;
+				n = Long.parseLong(scan.nextLine());
+				numbers[i] = n;
 			}
 		}
 
