@@ -6,6 +6,15 @@
 #include <cmath>
 using namespace std;
 
+/**
+ * Helper method to return the max number in the vector
+ */
+int getMax(vector<int> nums, int num);
+
+/**
+ * Helper method to counting sort the vector based on the digit, like in the python implementation
+ */
+void countingSort(vector<int> nums, int num, int digit);
 
 int main(int argc, char* argv[]) {
     int size;
@@ -35,42 +44,13 @@ int main(int argc, char* argv[]) {
     cout << "The vector has a size of " << numbers.size() << endl;
 
     //Radix sorts the vector
-    
-    //Finds the largest number and it's number of digits
-    int largest = numbers[0];
-    for(int i=1; i<numbers.size(); i++) {
-        if (numbers[i] > largest) {
-            largest = number[i];
-        }
-    }
-    int numDigits, count;
-    if(largest == 0) {
-        count = 1;
-    }
-    while (largest!=0) {
-        largest = largest / 10;
-        count ++;
-    }
-    numDigits = count;
+    int largest = getMax(numbers, numbers.size());
 
-    //Sort the vector
-    int iteration, i, digit, bucket, item;
-    vector<vector<int>> buckets(10);
-    for (iteration = 0; iteration < numDigits; ++iteration) {
-        // Copy everything from numbers into buckets
-        for (i = 0; i < numbers.size(); ++i) {
-            digit = (numbers[i] / int(pow(10, iteration)) % 10);
-            buckets[digit].push_back(numbers[i]);
-        }
-        // Copy everything from buckets back into numbers
-        i = 0;
-        for (bucket = 0; bucket < buckets.size(); ++bucket) {
-            for (item = 0; item < buckets[bucket].size(); ++item) {
-                numbers[i] = buckets[bucket][item];
-                i++;
-            }
-            buckets[bucket].clear();
-        }
+    // Counting sort the vector using 10^i as digit where i is the current place value number
+    int digit = 1;
+    while (largest / digit > 0) {
+        countingSort(numbers, numbers.size(), digit);
+        digit *= 10;
     }
 
     // Print the first and last ten numbers from the vector to the console
@@ -83,4 +63,41 @@ int main(int argc, char* argv[]) {
 
 
     return 0;
+}
+
+int getMax(vector<int> nums, int num) {
+    int max = nums[0];
+    for (int i = 1; i < num; i++) {
+        if (nums[i] > max) {
+            max = num[i];
+        }
+    }
+    return max;
+}
+
+void countingSort(vector<int> nums, int num, int digit) {
+    vector<int> output(num);
+    vector<int> count(10) = {0};
+    int i;
+
+    // Store count of occurrences in count
+    for(i = 0; i < num; i++) {
+        count[(nums[i] / digit) % 10] ++;
+    }
+
+    // Update count[i] to contain the actual position of the digit in output
+    for (i = 1; i < 10; i++) {
+        count[i] += count[i-1];
+    }
+
+    // Create the output vector
+    for (i = num - 1; i >= 0; i--) {
+        output[count[(nums[i] / digit) % 10] - 1] = nums[i];
+        count[(nums[i] / digit) % 10] --;
+    }
+
+    // Copy the output vector to nums so that nums is now sorted according to digit
+    for(i = 0; i < num; i++) {
+        nums[i] = output[i];
+    }
 }

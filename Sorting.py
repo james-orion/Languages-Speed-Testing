@@ -74,32 +74,14 @@ def radix_sort(size):
     print(f"Vector size: {len(nums)}")
 
     #Radix sort algorithm
-    # Finds the number of digits in the largest number
-    largest = nums[0]
-    for i in range(1, len(nums)):
-        if(nums[i] > largest):
-            largest = nums[i]
-    count = 0
-    if largest == 0:
-        count = 1
-    while largest != 0:
-        largest /= 10
-        count += 1
-    num_digits = count
+    largest = max(nums)
 
-    buckets = [][] * 10
-    for i in range(0, num_digits):
-        # Copy everything from nums into buckets
-        for j in range(0, len(nums)):
-            digit = (nums[i] // (10 ** i)) % 10
-            buckets[digit].append(nums[i])
-        # Copy everything from buckets back into nums
-        index = 0
-        for bucket in range(0, len(buckets)):
-            for item in range(0,  len(buckets[bucket])):
-                nums[index] = buckets[bucket][item]
-                index += 1
-            buckets[bucket].clear()
+    # Do a counting sort for every digit, 10^i where i is the current digit number is
+    # passed in to the counting sort function
+    digit = 1
+    while largest // digit > 0:
+        counting_sort(nums, digit)
+        digit *= 10
 
 
     # print the first and last ten numbers to demonstrate correct sorting
@@ -107,3 +89,35 @@ def radix_sort(size):
     print(nums[:10])
     print("...")
     print(nums[-10:])
+
+# Helper method to do counting sort for radix sort
+# sorts according to the digit represented by digit
+def counting_sort(nums, digit):
+    num = len(nums)
+
+    # The sorted output array
+    output = [0] * num
+
+    # initializing count array
+    count = [0] * 10
+
+    # Stores the count of each occurance in the count array
+    for i in range(0, num):
+        index = (nums[i]/digit)
+        count[int(index%10)] += 1 #increases the count of the number at the digit place by one
+
+    # Update count so it contains the actual position of the digit in the array
+    for i in range (1, 10):
+        count[i] += count[i-1]
+
+    # Builds the output array
+    i = num - 1
+    while(i >= 0):
+        index = (nums[i]/digit)
+        output[count[int((index)%10)] - 1] = nums[i]
+        count[int((index)%10)] -= 1
+        i -= 1
+
+    # Copies the output array into nums[] so that the array is now sorted
+    for j in range(0, len(nums)):
+        nums[j] = output[j]
