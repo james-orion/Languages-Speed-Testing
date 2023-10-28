@@ -9,8 +9,8 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = False
-runCpp = False
+runPython = True
+runCpp = True
 runJava = True
 
 # Create empty lists that will store the bubble sort runtimes
@@ -259,7 +259,6 @@ if runJava:
         try:
             # This is Python's way of calling the command line. We use it to compile the Java files.
             subprocess.check_output("javac sort_java/BubbleSort.java",stdin=None,stderr=subprocess.STDOUT,shell=True)
-            print ("Compiled!")
         except subprocess.CalledProcessError as e:
             # There were compiler errors in BubbleSort.java. Print out the error message and exit the program.
             print("<p>",e.output,"</p>")
@@ -305,24 +304,26 @@ cppX = range(1150, 10501, 1000)
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonBubbleTimes) < 10 or len(cppBubbleTimes) < 10:
+if len(pythonBubbleTimes) < 10 or len(cppBubbleTimes) < 10 or len(javaBubbleTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
     # Plot the Python bars in red
-    ax.bar(sizes, pythonBubbleTimes, width=200, color='r', align='edge')
+    ax.bar(sizes, pythonBubbleTimes, width=-100, color='r', align='edge')
     # Plot the C++ bars in yellow
-    ax.bar(sizes, cppBubbleTimes, width=200, color='y', align='center')
+    ax.bar(sizes, cppBubbleTimes, width=100, color='y', align='edge')
+    # Plot the Java bars in green
+    ax.bar(sizes, javaBubbleTimes, width=100, color='g', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Bubble Sort')
 # Set the graph title
-plt.title('Python vs. C++')
+plt.title('Python, C++ and Java')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
 plt.xticks(sizes)
 # Label the y axis
-plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
+plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in blue)')
 # Save the graph to a file
 plt.savefig('BattleOfTheBubbleSorts.png')
 # Display the graph in a new window

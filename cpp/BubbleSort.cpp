@@ -33,7 +33,8 @@ int main(int argc, char* argv[]) {
     cout << "The vector has a size of " << numbers.size() << endl;
     
     // Bubble Sort the vector - code taken from CS 124 Project 4
-    int numPasses = 0, i, temp;
+    int numPasses = 0, i;
+    long temp;
     bool haveSwapped = true;
     while (haveSwapped) {
         haveSwapped = false;
@@ -54,10 +55,9 @@ int main(int argc, char* argv[]) {
     for(int i = 0; i < 10; i++) {
         cout << numbers[i] << ", ";
     }
+    cout << "..." << endl;
     for(int j = numbers.size() - 10; j < numbers.size(); j++) {
         cout << numbers[j] << ", ";
     }
-
-
     return 0;
 }
