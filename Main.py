@@ -9,9 +9,9 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = False
-runCpp = False
-runJava = False
+runPython = True
+runCpp = True
+runJava = True
 runJS = True
 
 # Create empty lists that will store the bubble sort runtimes
@@ -397,38 +397,101 @@ if runJS:
         print(jsBubbleTimes)
 
 
+    # Selection Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+             print(f"Let's see how long it takes JavaScript to selection sort {size} random integers from a file!")
+        # Start the clock
+        tic = time.time()
+
+        # Runs the javascript file
+        p = Popen('Node javascript/SelectionSort.js '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
+        
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took C++ to sort the integers
+        if debug:
+            print(f"JavaScript Selection Sort finished in {(toc - tic):0.6f} seconds")
+
+        # Add the runtime to the list
+        jsSelectionTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of C++ runtimes
+    if debug:
+        print("JavaScript selection times:")
+        print(jsSelectionTimes)
+
+
+    # Radix Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+             print(f"Let's see how long it takes JavaScript to radix sort {size} random integers from a file!")
+        # Start the clock
+        tic = time.time()
+
+        # Runs the javascript file
+        p = Popen('Node javascript/RadixSort.js '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
+        
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took C++ to sort the integers
+        if debug:
+            print(f"JavaScript Radix Sort finished in {(toc - tic):0.6f} seconds")
+
+        # Add the runtime to the list
+        jsRadixTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of C++ runtimes
+    if debug:
+        print("JavaScript radix times:")
+        print(jsRadixTimes)
+
 
 # Graph the results - Bubble Sort
 
 # Create a list of the sizes to use for the x axis tick marks
 sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
-pythonX = range(850, 10001, 1000)
-cppX = range(1150, 10501, 1000)
+pythonX = range(800, 10001, 1000)
+cppX = range(1200, 10501, 1000)
+javaX = range(1100, 10501, 1000)
+jsX = range(900, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonBubbleTimes) < 10 or len(cppBubbleTimes) < 10 or len(javaBubbleTimes) < 10:
+if len(pythonBubbleTimes) < 10 or len(cppBubbleTimes) < 10 or len(javaBubbleTimes) < 10 or len(jsBubbleTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
     # Plot the Python bars in red
-    ax.bar(sizes, pythonBubbleTimes, width=-100, color='r', align='edge')
+    ax.bar(pythonX, pythonBubbleTimes, width=150, color='r', align='center')
     # Plot the C++ bars in yellow
-    ax.bar(sizes, cppBubbleTimes, width=100, color='y', align='edge')
+    ax.bar(cppX, cppBubbleTimes, width=150, color='y', align='center')
     # Plot the Java bars in green
-    ax.bar(sizes, javaBubbleTimes, width=100, color='g', align='center')
+    ax.bar(javaX, javaBubbleTimes, width=150, color='g', align='center')
+    # Plot the JavaScript bars in blue
+    ax.bar(jsX, jsBubbleTimes, width=150, color='b', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Bubble Sort')
 # Set the graph title
-plt.title('Python, C++ and Java')
+plt.title('Bubble Sort Runtimes')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
 plt.xticks(sizes)
 # Label the y axis
-plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green)')
+plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green, JavaScript in blue)')
 # Save the graph to a file
 plt.savefig('BattleOfTheBubbleSorts.png')
 # Display the graph in a new window
@@ -440,32 +503,36 @@ plt.show()
 # Create a list of the sizes to use for the x axis tick marks
 sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
-pythonX = range(850, 10001, 1000)
-cppX = range(1150, 10501, 1000)
+pythonX = range(800, 10001, 1000)
+cppX = range(1200, 10501, 1000)
+javaX = range(1100, 10501, 1000)
+jsX = range(900, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonSelectionTimes) < 10 or len(cppSelectionTimes) < 10 or len(javaSelectionTimes) < 10:
+if len(pythonSelectionTimes) < 10 or len(cppSelectionTimes) < 10 or len(javaSelectionTimes) < 10 or len(jsSelectionTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
     # Plot the Python bars in red
-    ax.bar(sizes, pythonSelectionTimes, width=-100, color='r', align='edge')
+    ax.bar(pythonX, pythonSelectionTimes, width=150, color='r', align='center')
     # Plot the C++ bars in yellow
-    ax.bar(sizes, cppSelectionTimes, width=100, color='y', align='edge')
+    ax.bar(cppX, cppSelectionTimes, width=150, color='y', align='center')
     # Plot the Java bars in green
-    ax.bar(sizes, javaSelectionTimes, width=100, color='g', align='center')
+    ax.bar(javaX, javaSelectionTimes, width=150, color='g', align='center')
+    # Plot the JavaScript bars in blue
+    ax.bar(jsX, jsSelectionTimes, width=150, color='b', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Selection Sort')
 # Set the graph title
-plt.title('Python, C++, and Java')
+plt.title('Selection Sort Runtimes')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
 plt.xticks(sizes)
 # Label the y axis
-plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green)')
+plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green, JavaScript in blue)')
 # Save the graph to a file
 plt.savefig('BattleOfTheSelectionSorts.png')
 # Display the graph in a new window
@@ -477,32 +544,36 @@ plt.show()
 # Create a list of the sizes to use for the x axis tick marks
 sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
-pythonX = range(850, 10001, 1000)
-cppX = range(1150, 10501, 1000)
+pythonX = range(800, 10001, 1000)
+cppX = range(1200, 10501, 1000)
+javaX = range(1100, 10501, 1000)
+jsX = range(900, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonRadixTimes) < 10 or len(cppRadixTimes) < 10 or len(javaRadixTimes) < 10:
+if len(pythonRadixTimes) < 10 or len(cppRadixTimes) < 10 or len(javaRadixTimes) < 10 or len(jsRadixTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
     # Plot the Python bars in red
-    ax.bar(sizes, pythonRadixTimes, width=-100, color='r', align='edge')
+    ax.bar(pythonX, pythonRadixTimes, width=150, color='r', align='center')
     # Plot the C++ bars in yellow
-    ax.bar(sizes, cppRadixTimes, width=100, color='y', align='edge')
+    ax.bar(cppX, cppRadixTimes, width=150, color='y', align='center')
     # Plot the Java bars in green
-    ax.bar(sizes, javaRadixTimes, width=100, color='g', align='center')
+    ax.bar(javaX, javaRadixTimes, width=150, color='g', align='center')
+    # Plot the JavaScript bars in blue
+    ax.bar(jsX, jsRadixTimes, width=150, color='b', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Radix Sort')
 # Set the graph title
-plt.title('Python, C++, and Java')
+plt.title('Radix Sort Runtimes')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
 plt.xticks(sizes)
 # Label the y axis
-plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green)')
+plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green, JavaScript in blue)')
 # Save the graph to a file
 plt.savefig('BattleOfTheRadixSorts.png')
 # Display the graph in a new window

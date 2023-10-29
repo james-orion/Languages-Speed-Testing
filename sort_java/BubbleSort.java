@@ -27,7 +27,7 @@ public class BubbleSort {
 		}
 
 		// Bubble sort algorithm
-		int numPasses = 0; i;
+		int numPasses = 0, i;
 		long temp;
 		boolean haveSwapped = true;
 		while(haveSwapped) {
