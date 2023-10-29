@@ -9,8 +9,8 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = True
-runCpp = True
+runPython = False
+runCpp = False
 runJava = True
 
 # Create empty lists that will store the bubble sort runtimes
@@ -265,16 +265,10 @@ if runJava:
             raise SystemExit
 
         # Executes the java file
-        if platform.system() == 'Windows':
-            p = Popen('java sort_java/BubbleSort.java '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
-            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
-            if debug:
-                print(p.stdout.read().decode('utf-8'))
-        else: # Mac and Linux case
-            p = Popen(['java sort_java/BubbleSort.java  '+str(size)], shell=True, stdout=PIPE, stdin=PIPE)
-            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
-            if debug:
-                print(p.stdout.read().decode('utf-8'))
+        p = Popen('java sort_java/BubbleSort.java '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
         
         # End clock
         toc = time.time()
@@ -308,16 +302,10 @@ if runJava:
             raise SystemExit
 
         # Executes the java file
-        if platform.system() == 'Windows':
-            p = Popen('java sort_java/SelectionSort.java '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
-            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
-            if debug:
-                print(p.stdout.read().decode('utf-8'))
-        else: # Mac and Linux case
-            p = Popen(['java sort_java/SelectionSort.java  '+str(size)], shell=True, stdout=PIPE, stdin=PIPE)
-            # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
-            if debug:
-                print(p.stdout.read().decode('utf-8'))
+        p = Popen('java sort_java/SelectionSort.java '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
         
         # End clock
         toc = time.time()
@@ -333,6 +321,43 @@ if runJava:
     if debug:
         print("Java selection times:")
         print(javaSelectionTimes)
+
+
+    # Radix Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+             print(f"Let's see how long it takes Java to radix sort {size} random integers from a file!")
+        # Start the clock
+        tic = time.time()
+        try:
+            # This is Python's way of calling the command line. We use it to compile the Java files.
+            subprocess.check_output("javac sort_java/RadixSort.java",stdin=None,stderr=subprocess.STDOUT,shell=True)
+        except subprocess.CalledProcessError as e:
+            # There were compiler errors in SelectionSort.java. Print out the error message and exit the program.
+            print("<p>",e.output,"</p>")
+            raise SystemExit
+
+        # Executes the java file
+        p = Popen('java sort_java/RadixSort.java '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
+        
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took C++ to sort the integers
+        if debug:
+            print(f"Java Radix Sort finished in {(toc - tic):0.6f} seconds")
+
+        # Add the runtime to the list
+        javaRadixTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of C++ runtimes
+    if debug:
+        print("Java radix times:")
+        print(javaRadixTimes)
 
 
 # Graph the results - Bubble Sort
@@ -392,7 +417,7 @@ else:
     # Plot the C++ bars in yellow
     ax.bar(sizes, cppSelectionTimes, width=100, color='y', align='edge')
     # Plot the Java bars in green
-    ax.bar(sizes, javaSelectionTimes, width=100, color='y', align='center')
+    ax.bar(sizes, javaSelectionTimes, width=100, color='g', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Selection Sort')
 # Set the graph title
@@ -420,24 +445,26 @@ cppX = range(1150, 10501, 1000)
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
 # If not all of the data has been collected, use dummy data
-if len(pythonRadixTimes) < 10 or len(cppRadixTimes) < 10:
+if len(pythonRadixTimes) < 10 or len(cppRadixTimes) < 10 or len(javaRadixTimes) < 10:
     # Plot the dummy values in blue
     ax.bar(sizes, range(1, 11), width=300, color='b', align='center')
 else:
     # Plot the Python bars in red
-    ax.bar(sizes, pythonRadixTimes, width=200, color='r', align='edge')
+    ax.bar(sizes, pythonRadixTimes, width=-100, color='r', align='edge')
     # Plot the C++ bars in yellow
-    ax.bar(sizes, cppRadixTimes, width=200, color='y', align='center')
+    ax.bar(sizes, cppRadixTimes, width=100, color='y', align='edge')
+    # Plot the Java bars in green
+    ax.bar(sizes, javaRadixTimes, width=100, color='g', align='center')
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Radix Sort')
 # Set the graph title
-plt.title('Python vs. C++')
+plt.title('Python, C++, and Java')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
 plt.xticks(sizes)
 # Label the y axis
-plt.ylabel('Times in seconds (Python in red, C++ in yellow)')
+plt.ylabel('Times in seconds (Python in red, C++ in yellow, Java in green)')
 # Save the graph to a file
 plt.savefig('BattleOfTheRadixSorts.png')
 # Display the graph in a new window

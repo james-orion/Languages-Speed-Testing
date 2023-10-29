@@ -26,8 +26,6 @@ public class BubbleSort {
 			}
 		}
 
-		System.out.println("Looking for size: " + size);
-
 		// Bubble sort algorithm
 		int numPasses = 0, i;
 		long temp;

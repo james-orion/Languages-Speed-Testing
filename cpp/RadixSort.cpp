@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 }
 
 int getMax(vector<long> nums, int num) {
-    int max = nums[0];
+    long max = nums[0];
     for (int i = 1; i < num; i++) {
         if (nums[i] > max) {
             max = nums[i];

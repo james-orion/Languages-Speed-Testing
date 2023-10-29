@@ -26,8 +26,6 @@ public class SelectionSort {
 			}
 		}
 
-		System.out.println("Looking for size: " + size);
-
 		//Selection Sort algorithm
 		int swapIndex, i, minIndex;
 		long temp;
