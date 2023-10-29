@@ -18,8 +18,8 @@ public class RadixSort {
 	/**
 	 * Private helper method to counting sort the array based on the digit
 	 */
-	private static void countingSort(long[] nums, int num, long digit) {
-		int[] output = new int[num];
+	private static void countingSort(long[] nums, int num, int digit) {
+		long[] output = new long[num];
 		int[] count = new int[10];
 		int i;
 

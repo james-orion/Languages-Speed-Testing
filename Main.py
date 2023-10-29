@@ -9,8 +9,8 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = False
-runCpp = False
+runPython = True
+runCpp = True
 runJava = True
 
 # Create empty lists that will store the bubble sort runtimes
