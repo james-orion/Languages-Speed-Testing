@@ -9,9 +9,10 @@ from Sorting import *
 # Flags to determine which part of the file to run and how much to print to the console
 debug = True
 # Change these to True when you are ready to run the Python and C++ simulations
-runPython = True
-runCpp = True
-runJava = True
+runPython = False
+runCpp = False
+runJava = False
+runJS = True
 
 # Create empty lists that will store the bubble sort runtimes
 pythonBubbleTimes = []
@@ -25,6 +26,10 @@ cppRadixTimes = []
 javaBubbleTimes = []
 javaSelectionTimes = []
 javaRadixTimes = []
+
+jsBubbleTimes = []
+jsSelectionTimes = []
+jsRadixTimes = []
 
 # Python sorting
 if runPython:
@@ -358,6 +363,39 @@ if runJava:
     if debug:
         print("Java radix times:")
         print(javaRadixTimes)
+
+
+# JavaScript sorting
+if runJS:
+    # Bubble Sort 1000, 2000, 3000, ..., 10000 integers
+    for size in range(1000, 10001, 1000):
+        # If debug is true, print statement to show where you are in the program
+        if debug:
+             print(f"Let's see how long it takes JavaScript to bubble sort {size} random integers from a file!")
+        # Start the clock
+        tic = time.time()
+
+        # Runs the javascript file
+        p = Popen('Node javascript/BubbleSort.js '+str(size), shell=True, stdout=PIPE, stdin=PIPE)
+        # If debug is true, print the size of the vector and first and last ten numbers to demonstrate correct sorting
+        if debug:
+            print(p.stdout.read().decode('utf-8'))
+        
+        # End clock
+        toc = time.time()
+
+        # If debug is true, print the time it took C++ to sort the integers
+        if debug:
+            print(f"JavaScript Bubble Sort finished in {(toc - tic):0.6f} seconds")
+
+        # Add the runtime to the list
+        jsBubbleTimes.append(toc-tic)
+
+    # If debug is true, after all test runs, print the list of C++ runtimes
+    if debug:
+        print("JavaScript bubble times:")
+        print(jsBubbleTimes)
+
 
 
 # Graph the results - Bubble Sort
