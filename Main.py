@@ -464,8 +464,8 @@ sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
 pythonX = range(800, 10001, 1000)
 cppX = range(1200, 10501, 1000)
-javaX = range(1100, 10501, 1000)
-jsX = range(900, 10001, 1000)
+javaX = range(1050, 10501, 1000)
+jsX = range(950, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
@@ -485,7 +485,7 @@ else:
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Bubble Sort')
 # Set the graph title
-plt.title('Bubble Sort Runtimes')
+plt.title('Bubble Sort Times')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
@@ -505,8 +505,8 @@ sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
 pythonX = range(800, 10001, 1000)
 cppX = range(1200, 10501, 1000)
-javaX = range(1100, 10501, 1000)
-jsX = range(900, 10001, 1000)
+javaX = range(1050, 10501, 1000)
+jsX = range(950, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
@@ -526,7 +526,7 @@ else:
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Selection Sort')
 # Set the graph title
-plt.title('Selection Sort Runtimes')
+plt.title('Selection Sort Times')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
@@ -546,8 +546,8 @@ sizes = range(1000, 10001, 1000)
 # Create lists that are offset so the Python bars aren't overlapping with C++ bars in the graph
 pythonX = range(800, 10001, 1000)
 cppX = range(1200, 10501, 1000)
-javaX = range(1100, 10501, 1000)
-jsX = range(900, 10001, 1000)
+javaX = range(1050, 10501, 1000)
+jsX = range(950, 10001, 1000)
 # Create a graph plot with one (1) row and one (1) column.
 # The third 1 signals to start at the first subplot (aka subplot 1 out of 1)
 ax = plt.subplot(111)
@@ -567,7 +567,7 @@ else:
 # Set the window title
 plt.gcf().canvas.manager.set_window_title('Speed Test - Radix Sort')
 # Set the graph title
-plt.title('Radix Sort Runtimes')
+plt.title('Radix Sort Times')
 # Label the x axis
 plt.xlabel('Number of integers to sort')
 # Make sure the x-axis tick marks/labels are at each 1000
